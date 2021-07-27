@@ -1,10 +1,12 @@
 package com.william.zup.transacao.api;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 
 @Entity
 public class Transacao {
@@ -12,34 +14,50 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //  "id":"fbaccbca-baa8-4c9b-91b0-b5d177772d77","valor":2.8836429817905445,"estabelecimento":{"nome":"Mike Raffone","cidade":"Lake Debby","endereco":"Suite 025 347 Miller Isle, Port Nolan, UT 77728"},"cartao":{"id":"b0012b90-42c8-40e6-903d-64acb3aa649b","email":"luram.scs@  aas.com.br"},"efetivadaEm":"2021-07-12T05:58:12"}
 
-    private String valor;
-    private String estabelecimento;
 
-    public Transacao(String valor, String estabelecimento) {
+    @NotBlank
+    private String numeroTransacao;
+
+    @NotNull
+    private BigDecimal valor;
+
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Estabelecimento estabelecimento;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Cartao cartao;
+
+
+    @NotNull
+
+    private LocalDateTime efetivadoEm;
+
+    public Transacao() {
+    }
+
+    public Transacao(String numeroTransacao, BigDecimal valor, Estabelecimento estabelecimento, Cartao cartao, LocalDateTime efetivadoEm) {
+        this.numeroTransacao = numeroTransacao;
         this.valor = valor;
         this.estabelecimento = estabelecimento;
+        this.cartao = cartao;
+        this.efetivadoEm = efetivadoEm;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public String getEstabelecimento() {
+    public Estabelecimento getEstabelecimento() {
         return estabelecimento;
     }
 
-    @Override
-    public String toString() {
-        return "Transacao{" +
-                "id=" + id +
-                ", valor='" + valor + '\'' +
-                ", estabelecimento='" + estabelecimento + '\'' +
-                '}';
+    public Cartao getCartao() {
+        return cartao;
+    }
+
+    public LocalDateTime getEfetivadoEm() {
+        return efetivadoEm;
     }
 }
