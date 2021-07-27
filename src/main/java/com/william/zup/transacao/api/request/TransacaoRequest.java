@@ -5,7 +5,7 @@ import com.william.zup.transacao.api.Transacao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-@JsonDeserialize
+
 public class TransacaoRequest {
 
     private BigDecimal valor;
@@ -17,7 +17,6 @@ public class TransacaoRequest {
     private LocalDateTime efetivadaEm;
 
     public TransacaoRequest(Transacao transacao) {
-
         this.valor = transacao.getValor();
         this.estabelecimento = new EstabelecimentoRequest(transacao);
         this.cartao = new CartaoRequest(transacao);

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class ConsultaCartaController {
+public class ConsultaCartaoController {
 
     @PersistenceContext
     private EntityManager manager;
